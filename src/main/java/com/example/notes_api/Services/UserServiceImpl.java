@@ -1,6 +1,7 @@
 package com.example.notes_api.Services;
 
 import com.example.notes_api.DTO.UserDTO;
+import com.example.notes_api.Exceptions.UserNotFoundException;
 import com.example.notes_api.Mappers.UserMapper;
 import com.example.notes_api.Models.User;
 import com.example.notes_api.Repositories.UserRepository;
@@ -23,15 +24,13 @@ public class UserServiceImpl implements UserService{
     }
 
     public String deleteUser(Long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         userRepository.deleteById(id);
         return "User deleted";
     }
 
     public String updateUser(UserDTO userDTO){
-        User user = userRepository.findById(userDTO.getId()).orElse(null);
-        if(user == null){
-            return "User not found";
-        }
+        User user = userRepository.findById(userDTO.getId()).orElseThrow(() -> new UserNotFoundException("User not found"));
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         userRepository.save(UserMapper.mapDTOToUser(userDTO));
