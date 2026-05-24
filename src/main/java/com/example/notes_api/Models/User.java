@@ -19,7 +19,7 @@ public class User {
     private String password;
     @Column(name = "role")
     private String role;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notes> notes;
 
     public User(){

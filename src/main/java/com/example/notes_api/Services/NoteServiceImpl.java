@@ -3,7 +3,9 @@ package com.example.notes_api.Services;
 import com.example.notes_api.DTO.NotesDTO;
 import com.example.notes_api.Mappers.NoteMapper;
 import com.example.notes_api.Models.Notes;
+import com.example.notes_api.Models.User;
 import com.example.notes_api.Repositories.NoteRepository;
+import com.example.notes_api.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,17 @@ import java.util.List;
 public class NoteServiceImpl implements NoteService {
 
     NoteRepository noteRepository;
-    public NoteServiceImpl(NoteRepository noteRepository){
+    UserRepository userRepository;
+    public NoteServiceImpl(NoteRepository noteRepository, UserRepository userRepository){
         this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
     }
 
-    public String postNote(NotesDTO notesDTO){
+    public String postNote(Long userId, NotesDTO notesDTO) throws IllegalArgumentException{
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Notes note = NoteMapper.mapDTOToNote(notesDTO);
-        noteRepository.save(note);
+        user.getNotes().add(note);
+        userRepository.save(user);
         return "Note created";
     }
 
