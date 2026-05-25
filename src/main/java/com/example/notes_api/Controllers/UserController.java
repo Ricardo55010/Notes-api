@@ -21,10 +21,10 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<String> postUser(UserDTO userDTO){
+    public ResponseEntity<Long> postUser(UserDTO userDTO){
         User user = UserMapper.mapDTOToUser(userDTO);
-        String message = userService.postUser(userDTO);
-        return ResponseEntity.ok(message);
+        Long userId = userService.postUser(userDTO);
+        return ResponseEntity.ok(userId);
     }
 
     @DeleteMapping("/{id}")
@@ -42,5 +42,11 @@ public class UserController {
     @GetMapping()
     public List<UserDTO> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
+        UserDTO userDTO = userService.getUserById(id);
+        return ResponseEntity.ok(userDTO);
     }
 }

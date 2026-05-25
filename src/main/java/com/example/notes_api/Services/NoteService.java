@@ -5,8 +5,9 @@ import com.example.notes_api.DTO.NotesDTO;
 import java.util.List;
 
 public interface NoteService {
-    String postNote(Long userId, NotesDTO notesDTO);
+    Long postNote(Long userId, NotesDTO notesDTO);
     List<NotesDTO> getAllNotes();
     String updateNote(NotesDTO noteDTO);
     String deleteNote(Long id);
+    NotesDTO getNoteById(Long id);
 }

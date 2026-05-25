@@ -37,9 +37,14 @@ public class UserServiceImpl implements UserService{
         return "User updated";
     }
 
-    public String postUser(UserDTO userDTO){
+    public Long postUser(UserDTO userDTO){
         User user = UserMapper.mapDTOToUser(userDTO);
         userRepository.save(user);
-        return "User created";
+        return user.getId();
+    }
+
+    public UserDTO getUserById(Long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+        return UserMapper.mapUserToDTO(user);
     }
 }

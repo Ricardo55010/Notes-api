@@ -9,7 +9,7 @@ public class UserDTO {
     private String email;
     private String role;
     private String token;
-    private List<NotesDTO> notes;
+    //private List<NotesDTO> notes;
 
 
     public UserDTO() {
@@ -60,11 +60,11 @@ public class UserDTO {
     public void setToken(String token) {
         this.token = token;
     }
-    public List<NotesDTO> getNotes() {
-        return notes;
-    }
-    public void setNotes(List<NotesDTO> notes) {
-        this.notes = notes;
-    }
+   // public List<NotesDTO> getNotes() {
+   //    return notes;
+   // }
+   // public void setNotes(List<NotesDTO> notes) {
+    //    this.notes = notes;
+   // }
 
 }

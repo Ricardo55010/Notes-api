@@ -24,12 +24,12 @@ public class NoteServiceImpl implements NoteService {
         this.userRepository = userRepository;
     }
 
-    public String postNote(Long userId, NotesDTO notesDTO){
+    public Long postNote(Long userId, NotesDTO notesDTO){
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
         Notes note = NoteMapper.mapDTOToNote(notesDTO);
         user.getNotes().add(note);
         userRepository.save(user);
-        return "Note created";
+        return note.getId();
     }
 
     public List<NotesDTO> getAllNotes(){
@@ -47,6 +47,11 @@ public class NoteServiceImpl implements NoteService {
         Notes note = noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException("Note not found"));
         noteRepository.deleteById(id);
         return "Note deleted";
+    }
+
+    public NotesDTO getNoteById(Long id){
+        Notes note = noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException("Note not found"));
+        return NoteMapper.mapNoteToDTO(note);
     }
 
 }

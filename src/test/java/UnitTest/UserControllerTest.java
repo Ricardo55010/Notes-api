@@ -38,7 +38,7 @@ public class UserControllerTest {
     @Test
     public void testPostUser() throws Exception{
         UserDTO userDTO = new UserDTO(null, "Name", "Email", "Password", null);
-        when(userService.postUser(any())).thenReturn("User created");
+        when(userService.postUser(any())).thenReturn(1L);
         mockMvc.perform(post("/api/users/")).andExpect(status().isOk());
     }
     @Test

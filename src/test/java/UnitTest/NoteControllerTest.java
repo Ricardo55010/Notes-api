@@ -41,7 +41,7 @@ public class NoteControllerTest {
     @Test
     public void testPostNote() throws Exception{
         NotesDTO note = new NotesDTO(null, "Title", "Description", null, null);
-        when(noteService.postNote(any(), any())).thenReturn("Note created");
+        when(noteService.postNote(any(), any())).thenReturn(1L);
         mockMvc.perform(post("/api/notes/")).andExpect(status().isOk());
     }
     @Test
