@@ -1,0 +1,51 @@
+#k8s-app.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-deployment
+spec:
+  selector:
+    matchLabels:
+      app: notes-back
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: notes-back
+    spec:
+      containers:
+        - name: notes-back-container
+          image: 'ubuntu:latest'
+          imagePullPolicy: Never #needed in order to use local image
+          ports:
+            - containerPort: 9000
+          #env:
+            #- name: DB_HOST
+            #  value: mysql
+            #- name: DB_NAME
+            #  value: SpringStore
+            #- name: DB_USERNAME
+            #  value: root
+            #- name: DB_PASSWORD
+            #  value: Ricardo55010
+          #imagePullPolicy: Always
+      #imagePullSecrets:
+        #- name: appsecret
+#---
+
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: notes-svc
+#spec:
+#  selector:
+#    app: notes-back
+#  ports:
+#    - protocol: "TCP"
+#      port: 8081 #accesible inside cluster
+#      targetPort: 9000 #forward pod
+#      nodePort: 30002 #outside
+#  type: LoadBalancer
+#  externalIPs:
+#    -192.168.64.2
