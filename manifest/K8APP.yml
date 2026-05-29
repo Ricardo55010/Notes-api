@@ -16,36 +16,36 @@ spec:
     spec:
       containers:
         - name: notes-back-container
-          image: 'ubuntu:latest'
+          image: 'notes1:latest'
           imagePullPolicy: Never #needed in order to use local image
+          securityContext:
+            privileged: true
           ports:
-            - containerPort: 9000
-          #env:
-            #- name: DB_HOST
-            #  value: mysql
-            #- name: DB_NAME
-            #  value: SpringStore
-            #- name: DB_USERNAME
-            #  value: root
-            #- name: DB_PASSWORD
-            #  value: Ricardo55010
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: mysql
+            - name: DB_NAME
+              value: notes
+            - name: DB_USERNAME
+              value: root
+            - name: DB_PASSWORD
+              value: Ricardo@55010
           #imagePullPolicy: Always
       #imagePullSecrets:
         #- name: appsecret
-#---
+---
 
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: notes-svc
-#spec:
-#  selector:
-#    app: notes-back
-#  ports:
-#    - protocol: "TCP"
-#      port: 8081 #accesible inside cluster
-#      targetPort: 9000 #forward pod
+apiVersion: v1
+kind: Service
+metadata:
+  name: notes-svc
+spec:
+  selector:
+    app: notes-back
+  ports:
+    - protocol: "TCP"
+      port: 8081 #accesible inside cluster
+      targetPort: 8080 #forward pod
 #      nodePort: 30002 #outside
-#  type: LoadBalancer
-#  externalIPs:
-#    -192.168.64.2
+  type: LoadBalancer
