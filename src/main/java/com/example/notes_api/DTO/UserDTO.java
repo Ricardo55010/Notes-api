@@ -1,11 +1,17 @@
 package com.example.notes_api.DTO;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public class UserDTO {
     private Long id;
+    @NotNull
     private String name;
+    @NotNull
     private String password;
+    @Email
     private String email;
     private String role;
     private String token;

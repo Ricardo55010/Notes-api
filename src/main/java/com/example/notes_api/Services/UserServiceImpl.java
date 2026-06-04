@@ -6,6 +6,8 @@ import com.example.notes_api.Mappers.UserMapper;
 import com.example.notes_api.Models.User;
 import com.example.notes_api.Repositories.UserRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,17 +17,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Primary
 public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public List<UserDTO> getAllUsers() {
-        List<UserDTO> users = userRepository.findAll().stream().map(UserMapper::mapUserToDTO).toList();
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
+        Page<UserDTO> users = userRepository.findByNamePaginated(pageable).map(UserMapper::mapUserToDTO);
         return users;
     }
 
@@ -74,6 +76,7 @@ public class UserServiceImpl implements UserService {
                     .password(account.getPassword())
                     .roles(account.getRole())
                     .build();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

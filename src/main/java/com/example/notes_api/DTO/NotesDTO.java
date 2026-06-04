@@ -1,11 +1,16 @@
 package com.example.notes_api.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class NotesDTO {
     private Long id;
+
+    @NotBlank
     private String title;
+    @NotBlank
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

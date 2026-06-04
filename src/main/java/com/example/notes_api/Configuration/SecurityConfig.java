@@ -26,11 +26,11 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
+/*    @Bean
     public UserDetailsService userDetailsService(UserService userService) {
         return userService;
     }
-
+*/
     @Bean
     public JWTFilter jwtFilter(JWTFilter jwtFilter) {
         return jwtFilter;
@@ -56,8 +56,9 @@ public class SecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/postUser").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
+                        .requestMatchers("/swagger-ui/*").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

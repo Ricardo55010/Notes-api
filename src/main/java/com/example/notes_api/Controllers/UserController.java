@@ -6,6 +6,11 @@ import com.example.notes_api.Mappers.UserMapper;
 import com.example.notes_api.Models.User;
 import com.example.notes_api.Services.UserService;
 import com.example.notes_api.utils.JwtUtil;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +37,7 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<Long> postUser(UserDTO userDTO) throws Exception{
+    public ResponseEntity<Long> postUser(@Valid UserDTO userDTO) throws Exception{
         User user = UserMapper.mapDTOToUser(userDTO);
         Long userId = userService.postUser(userDTO);
         return ResponseEntity.ok(userId);
@@ -51,8 +56,14 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<UserDTO> getAllUsers(){
-        return userService.getAllUsers();
+    public Page<UserDTO> getAllUsers(@RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "1") int size,
+    @RequestParam(defaultValue = "name") String sortBy,
+    @RequestParam(defaultValue = "true") boolean ascending){
+        Sort sort = ascending ? Sort.by(sortBy).ascending() :
+                Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page,size,sort);
+        return userService.getAllUsers(pageable);
     }
 
     @GetMapping("/{id}")
