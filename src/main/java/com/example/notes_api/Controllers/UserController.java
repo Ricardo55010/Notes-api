@@ -37,8 +37,7 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<Long> postUser(@Valid UserDTO userDTO) throws Exception{
-        User user = UserMapper.mapDTOToUser(userDTO);
+    public ResponseEntity<Long> postUser(@Valid @RequestBody UserDTO userDTO) throws Exception{
         Long userId = userService.postUser(userDTO);
         return ResponseEntity.ok(userId);
     }

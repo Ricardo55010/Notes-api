@@ -9,6 +9,6 @@ public class UserMapper {
     }
 
     public static User mapDTOToUser(UserDTO userDTO){
-        return new User(userDTO.getName(), userDTO.getPassword(), userDTO.getEmail(), userDTO.getRole());
+        return new User(userDTO.getName(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getRole());
     }
 }

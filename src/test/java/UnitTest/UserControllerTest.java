@@ -45,7 +45,7 @@ public class UserControllerTest {
     public void testGetAllUsers() throws Exception{
 
 
-        when(userService.getAllUsers()).thenReturn(null);
+        when(userService.getAllUsers(any())).thenReturn(null);
 
         mockMvc.perform(get("/api/users/"))
                 .andExpect(status().isOk());
