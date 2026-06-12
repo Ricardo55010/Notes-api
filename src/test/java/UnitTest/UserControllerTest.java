@@ -8,6 +8,8 @@ import com.example.notes_api.NotesApiApplication;
 import com.example.notes_api.Services.NoteServiceImpl;
 import com.example.notes_api.Services.UserService;
 import com.example.notes_api.Services.UserServiceImpl;
+import com.example.notes_api.filters.JWTFilter;
+import com.example.notes_api.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -43,10 +46,7 @@ public class UserControllerTest {
     }
     @Test
     public void testGetAllUsers() throws Exception{
-
-
         when(userService.getAllUsers(any())).thenReturn(null);
-
         mockMvc.perform(get("/api/users/"))
                 .andExpect(status().isOk());
     }
@@ -69,5 +69,21 @@ class UserTestConfig {
     @Bean
     UserService userService(){
         return Mockito.mock(UserServiceImpl.class);
+    }
+
+    //adding just mock without a specific definition for its method just to test web layer
+    @Bean
+    JwtUtil jwtUtil(){
+        return Mockito.mock(JwtUtil.class);
+    }
+
+    @Bean
+    JWTFilter jwtFilter(){
+        return Mockito.mock(JWTFilter.class);
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(){
+        return Mockito.mock(AuthenticationManager.class);
     }
 }
