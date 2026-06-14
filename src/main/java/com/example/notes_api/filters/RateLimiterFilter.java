@@ -1,17 +1,20 @@
-package com.example.notes_api.RateLimiter;
+package com.example.notes_api.filters;
 
+import com.example.notes_api.Repositories.RateLimitRepository;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RateLimiterFilter  implements Filter{
 
-    private final Map<String, AtomicInteger> requestCountsPerIpAddress = new ConcurrentHashMap<>();
+
+    RateLimitRepository rateLimitRepository = RateLimitRepository.getInstance();
+
+    private Map<String, AtomicInteger> requestCountsPerIpAddress;
 
     private static final int MAX_REQUESTS_PER_MINUTE = 10;
 
@@ -20,6 +23,7 @@ public class RateLimiterFilter  implements Filter{
             throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        requestCountsPerIpAddress = rateLimitRepository.getRequestCountsPerIpAddress();
 
         String clientIpAddress = httpServletRequest.getRemoteAddr();
 

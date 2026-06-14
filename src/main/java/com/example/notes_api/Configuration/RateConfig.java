@@ -1,6 +1,6 @@
 package com.example.notes_api.Configuration;
 
-import com.example.notes_api.RateLimiter.RateLimiterFilter;
+import com.example.notes_api.filters.RateLimiterFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
