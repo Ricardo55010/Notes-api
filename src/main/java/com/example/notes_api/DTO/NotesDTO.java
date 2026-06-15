@@ -1,5 +1,6 @@
 package com.example.notes_api.DTO;
 
+import com.example.notes_api.Models.Classification;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
@@ -14,17 +15,28 @@ public class NotesDTO {
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Classification classification;
 
     public NotesDTO(){
 
     }
 
-    public NotesDTO(Long id, String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt){
+    public NotesDTO(Long id, String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt, Classification classification, Classification classificationName){
         this.id = id;
         this.title = title;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.classification = classification;
+    }
+
+    public NotesDTO(Long id, String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt, Classification classification){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.classification = classification;
     }
 
     public Long getId() {
@@ -54,4 +66,10 @@ public class NotesDTO {
         return updatedAt;
     }
     public void setUpdatedAt(LocalDateTime updatedAt) {}
+    public Classification getClassification() {
+        return classification;
+    }
+    public void setClassification(Classification classification) {
+        this.classification = classification;
+    }
 }

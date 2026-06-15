@@ -20,16 +20,19 @@ public class Notes {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    @Column(name = "classification")
+    private Classification classification;
 
     public Notes(){
 
     }
 
-    public Notes(String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt){
+    public Notes(String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt , Classification classification){
         this.title = title;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.classification = classification;
     }
 
     public Long getId() {
@@ -68,5 +71,11 @@ public class Notes {
         this.updatedAt = updatedAt;
     }
 
+    public Classification getClassification() {
+        return classification;
+    }
+    public void setClassification(Classification classification) {
+        this.classification = classification;
+    }
 
 }

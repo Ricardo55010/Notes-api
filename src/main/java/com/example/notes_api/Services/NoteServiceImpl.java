@@ -4,6 +4,7 @@ import com.example.notes_api.DTO.NotesDTO;
 import com.example.notes_api.Exceptions.NoteNotFoundException;
 import com.example.notes_api.Exceptions.UserNotFoundException;
 import com.example.notes_api.Mappers.NoteMapper;
+import com.example.notes_api.Models.Classification;
 import com.example.notes_api.Models.Notes;
 import com.example.notes_api.Models.User;
 import com.example.notes_api.Repositories.NoteRepository;
@@ -33,7 +34,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     public List<NotesDTO> getAllNotes(){
-        List<NotesDTO> notes = noteRepository.findAll().stream().map(NoteMapper::mapNoteToDTO).toList();
+        List<NotesDTO> notes = noteRepository.findAll().stream().map(NoteMapper::mapNoteToDTO).filter(notesDTO -> notesDTO.getClassification() == Classification.PUBLIC).toList();
         return notes;
     }
     public String updateNote(NotesDTO notesDTO){

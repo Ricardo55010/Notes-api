@@ -4,6 +4,7 @@ package IntegrationTest;
 import com.example.notes_api.DTO.AccessDTO;
 import com.example.notes_api.DTO.NotesDTO;
 import com.example.notes_api.DTO.UserDTO;
+import com.example.notes_api.Models.Classification;
 import com.example.notes_api.NotesApiApplication;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
@@ -56,7 +57,7 @@ public class IntegrationTest {
         //create note
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessDTO.getJwt());
-        NotesDTO notesDTO = new NotesDTO(1L, "Title", "Description", null, null);
+        NotesDTO notesDTO = new NotesDTO(1L, "Title", "Description", null, null, Classification.PUBLIC);
         restTemplate.exchange("http://localhost:"+port+"/api/notes/"+userId, HttpMethod.POST, new HttpEntity<>(notesDTO, headers), String.class).getBody();
         //delete user
         restTemplate.delete("http://localhost:"+port+"/api/users/"+userId);

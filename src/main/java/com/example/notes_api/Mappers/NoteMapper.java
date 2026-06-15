@@ -5,11 +5,11 @@ import com.example.notes_api.Models.Notes;
 
 public class NoteMapper {
     public static NotesDTO mapNoteToDTO(Notes note){
-        return new NotesDTO(note.getId(), note.getTitle(), note.getDescription(), note.getCreatedAt(),note.getUpdatedAt());
+        return new NotesDTO(note.getId(), note.getTitle(), note.getDescription(), note.getCreatedAt(),note.getUpdatedAt(), note.getClassification());
     }
 
     public static Notes mapDTOToNote(NotesDTO noteDTO){
-        return new Notes(noteDTO.getTitle(), noteDTO.getDescription(), noteDTO.getCreatedAt(), noteDTO.getUpdatedAt());
+        return new Notes(noteDTO.getTitle(), noteDTO.getDescription(), noteDTO.getCreatedAt(), noteDTO.getUpdatedAt(), noteDTO.getClassification());
     }
 
 }

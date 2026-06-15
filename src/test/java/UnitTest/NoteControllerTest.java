@@ -3,6 +3,7 @@ package UnitTest;
 
 import com.example.notes_api.Controllers.NoteController;
 import com.example.notes_api.DTO.NotesDTO;
+import com.example.notes_api.Models.Classification;
 import com.example.notes_api.NotesApiApplication;
 import com.example.notes_api.Repositories.NoteRepository;
 import com.example.notes_api.Services.NoteServiceImpl;
@@ -53,7 +54,7 @@ public class NoteControllerTest {
 
     @Test
     public void testPostNote() throws Exception{
-        NotesDTO note = new NotesDTO(null, "Title", "Description", null, null);
+        NotesDTO note = new NotesDTO(null, "Title", "Description", null, null, Classification.PUBLIC);
         when(noteService.postNote(any(), any())).thenReturn(1L);
         mockMvc.perform(post("/api/notes/")).andExpect(status().isOk());
     }
@@ -69,7 +70,7 @@ public class NoteControllerTest {
     @Test
     public void testUpdateNote() throws Exception{
 
-        NotesDTO note = new NotesDTO(null, "Title", "Description", null, null);
+        NotesDTO note = new NotesDTO(null, "Title", "Description", null, null, Classification.PUBLIC);
         when(noteService.updateNote(any())).thenReturn("Updated");
         mockMvc.perform(put("/api/notes/")).andExpect(status().isOk());
     }
