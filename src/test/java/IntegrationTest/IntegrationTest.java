@@ -42,8 +42,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void test() throws Exception{
-        ObjectMapper objectMapper = new ObjectMapper();
+    public void testEverything() throws Exception{
         UserDTO userDTO = new UserDTO(1L, "testuser", "password", "email@hotmail.com", "String");
         //post user
         Long userId = Long.parseLong(restTemplate.postForEntity("http://localhost:"+port+"/api/users/", userDTO, String.class).getBody());

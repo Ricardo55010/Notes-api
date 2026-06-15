@@ -55,14 +55,14 @@ public class UserController {
     }
 
     @GetMapping()
-    public Page<UserDTO> getAllUsers(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<UserDTO>> getAllUsers(@RequestParam(defaultValue = "0") int page,
     @RequestParam(defaultValue = "1") int size,
     @RequestParam(defaultValue = "name") String sortBy,
     @RequestParam(defaultValue = "true") boolean ascending){
         Sort sort = ascending ? Sort.by(sortBy).ascending() :
                 Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page,size,sort);
-        return userService.getAllUsers(pageable);
+        return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
     @GetMapping("/{id}")
@@ -72,13 +72,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public AccessDTO login(@RequestParam String username, @RequestParam String password) throws Exception {
+    public ResponseEntity<AccessDTO> login(@RequestParam String username, @RequestParam String password) throws Exception {
         Authentication authentication= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         if (authentication.isAuthenticated()) {
             AccessDTO access = new AccessDTO();
             access.setJwt(jwtUtil.generateToken(username));
             access.setUser(userService.getUserByName(username));
-            return access;
+            return ResponseEntity.ok(access);
         } else {
             throw new UsernameNotFoundException("Invalid user request!");
         }
@@ -86,9 +86,9 @@ public class UserController {
 
 
     @GetMapping("/refresh")
-    public UserDTO refresh() throws  Exception{
+    public ResponseEntity<UserDTO> refresh() throws  Exception{
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return  userService.getUserByName(username);
+        return  ResponseEntity.ok(userService.getUserByName(username));
     }
 
 }
