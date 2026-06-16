@@ -8,12 +8,14 @@ import com.example.notes_api.Models.Workplace;
 import com.example.notes_api.Repositories.NoteRepository;
 import com.example.notes_api.Repositories.UserRepository;
 import com.example.notes_api.Repositories.WorkPlaceRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class WorkPlaceImpl implements WorkPlaceService{
     private final WorkPlaceRepository workPlaceRepository;
     private final NoteRepository noteRepository;
     private final UserRepository userRepository;
-
     public WorkPlaceImpl(WorkPlaceRepository workPlaceRepository, NoteRepository noteRepository, UserRepository userRepository) {
         this.workPlaceRepository = workPlaceRepository;
         this.noteRepository = noteRepository;
@@ -65,6 +67,11 @@ public class WorkPlaceImpl implements WorkPlaceService{
         workplace.setName(name);
         workplace.setAddress(address);
         workplace.setDescription(description);
+        //
+        var principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByName(principal.getName());
+        workplace.getUsers().add(user);
+        //
         workPlaceRepository.save(workplace);
         return "Workplace created";
     }

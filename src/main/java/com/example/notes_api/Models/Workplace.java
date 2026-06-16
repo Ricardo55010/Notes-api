@@ -9,18 +9,18 @@ import java.util.List;
 public class Workplace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "workplace_id")
+    private Long workplace_id;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
     @Column(name = "address")
     private String address;
-    @ManyToMany(mappedBy = "workplace")
-    @JoinTable(name = "workplace_user", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id"))
+    @ManyToMany
+    @JoinTable(name = "workplace_user", joinColumns = @JoinColumn(name = "workplace_id"), inverseJoinColumns = @JoinColumn(name = "id"))
     private List<User> users;
-    @OneToMany(mappedBy = "workplace")
+    @OneToMany
     private List<Notes> notes;
 
     public Workplace(){
@@ -38,10 +38,10 @@ public class Workplace {
 
 
     public Long getId() {
-        return id;
+        return workplace_id;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long workplace_id) {
+        this.workplace_id = workplace_id;
     }
     public String getName() {
         return name;
