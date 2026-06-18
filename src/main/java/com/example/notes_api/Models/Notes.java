@@ -4,6 +4,7 @@ package com.example.notes_api.Models;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "notes")
@@ -22,17 +23,20 @@ public class Notes {
     private LocalDateTime updatedAt;
     @Column(name = "classification")
     private Classification classification;
+    @OneToMany
+    private List<Annotation>  annotations;
 
     public Notes(){
 
     }
 
-    public Notes(String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt , Classification classification){
+    public Notes(String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt , Classification classification, List<Annotation> annotations) {
         this.title = title;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.classification = classification;
+        this.annotations = annotations;
     }
 
     public Long getId() {
@@ -76,6 +80,14 @@ public class Notes {
     }
     public void setClassification(Classification classification) {
         this.classification = classification;
+    }
+
+    public List<Annotation> getAnnotations() {
+        return annotations;
+    }
+
+    public void setAnnotations(List<Annotation> annotations) {
+        this.annotations = annotations;
     }
 
 }
