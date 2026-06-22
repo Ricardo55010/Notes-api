@@ -9,7 +9,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "username_id")
     private Long id;
     @Column(name = "name")
     private String name;
@@ -19,7 +19,8 @@ public class User {
     private String password;
     @Column(name = "role")
     private String role;
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "user_notes", joinColumns = @JoinColumn(name = "username_id"), inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Notes> notes;
 
     public User(){

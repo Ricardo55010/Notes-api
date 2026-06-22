@@ -36,25 +36,25 @@ public class UserController {
     }
 
 
-    @PostMapping
+    @PostMapping("create-user")
     public ResponseEntity<Long> postUser(@Valid @RequestBody UserDTO userDTO) throws Exception{
         Long userId = userService.postUser(userDTO);
         return ResponseEntity.ok(userId);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete-user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id){
         String message = userService.deleteUser(id);
         return ResponseEntity.ok(message);
     }
 
-    @PutMapping()
+    @PutMapping("update-user")
     public ResponseEntity<String> updateUser(@Valid @RequestBody UserDTO userDTO){
         String message = userService.updateUser(userDTO);
         return ResponseEntity.ok(message);
     }
 
-    @GetMapping()
+    @GetMapping("get-allusers")
     public ResponseEntity<Page<UserDTO>> getAllUsers(@RequestParam(defaultValue = "0") int page,
     @RequestParam(defaultValue = "1") int size,
     @RequestParam(defaultValue = "name") String sortBy,
@@ -65,7 +65,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("getUser/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
         UserDTO userDTO = userService.getUserById(id);
         return ResponseEntity.ok(userDTO);

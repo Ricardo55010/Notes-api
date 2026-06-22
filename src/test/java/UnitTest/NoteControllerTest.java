@@ -24,6 +24,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
@@ -54,7 +56,7 @@ public class NoteControllerTest {
 
     @Test
     public void testPostNote() throws Exception{
-        NotesDTO note = new NotesDTO(null, "Title", "Description", null, null, Classification.PUBLIC);
+        NotesDTO note = new NotesDTO(null, "Title", "Description", null, null, Classification.PUBLIC,new ArrayList<>());
         when(noteService.postNote(any(), any())).thenReturn(1L);
         mockMvc.perform(post("/api/notes/")).andExpect(status().isOk());
     }
@@ -70,7 +72,7 @@ public class NoteControllerTest {
     @Test
     public void testUpdateNote() throws Exception{
 
-        NotesDTO note = new NotesDTO(null, "Title", "Description", null, null, Classification.PUBLIC);
+        NotesDTO note = new NotesDTO(null, "Title", "Description", null, null, Classification.PUBLIC,new ArrayList<>());
         when(noteService.updateNote(any())).thenReturn("Updated");
         mockMvc.perform(put("/api/notes/")).andExpect(status().isOk());
     }

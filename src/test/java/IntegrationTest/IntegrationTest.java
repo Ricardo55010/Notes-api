@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -57,7 +58,7 @@ public class IntegrationTest {
         //create note
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessDTO.getJwt());
-        NotesDTO notesDTO = new NotesDTO(1L, "Title", "Description", null, null, Classification.PUBLIC);
+        NotesDTO notesDTO = new NotesDTO(1L, "Title", "Description", null, null, Classification.PUBLIC,new ArrayList<>());
         restTemplate.exchange("http://localhost:"+port+"/api/notes/"+userId, HttpMethod.POST, new HttpEntity<>(notesDTO, headers), String.class).getBody();
         //delete user
         restTemplate.delete("http://localhost:"+port+"/api/users/"+userId);
